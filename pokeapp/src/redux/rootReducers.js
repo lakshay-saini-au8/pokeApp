@@ -1,3 +1,8 @@
 import { combineReducers } from "redux";
-const rootReducer = combineReducers();
+import allPokemonReducer from "./reducers/allPokemonReducer";
+import singlePokemonReducer from "./reducers/singlePokemonReducer";
+const rootReducer = combineReducers({
+  allPokemonState: allPokemonReducer,
+  singlePokemonState: singlePokemonReducer,
+});
 export default rootReducer;

@@ -1,21 +1,22 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { fetchPokemon } from "../action/pokemonAction";
+import { fetchAllPokemonData } from "../../api";
+import { fetchPokemon, setPokemon } from "../action/pokemonAction";
 import { pokemon } from "../actionTypes";
 
 function* setAllPokemon() {
   try {
-    put(fetchPokemon);
-    const pokemonData = yield call(fetchAllPokemonData);
+    yield put(fetchPokemon());
+    const { data } = yield call(fetchAllPokemonData);
+    yield put(setPokemon(data));
   } catch (error) {
+    console.error(error);
   } finally {
-    put(fetchPokemon);
+    yield put(fetchPokemon());
   }
-
-  const pokemonData = yield call();
 }
 
 function* watchFetchAllPokemon() {
-  yield takeEvery(pokemon.SET_POKEMON, setAllPokemon);
+  yield takeEvery(pokemon.LOAD_POKEMON, setAllPokemon);
 }
 
 export default watchFetchAllPokemon;
